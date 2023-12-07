@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>country-table</title>
+</head>
+
+<body>
+    <h1>Country Data</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>capital</th>
+                <th>population</th>
+                <th>region</th>
+                <th>nativeName</th>
+                <th>callingCodes</th>
+                <th>timezones</th>
+                <th>area</th>
+                <th>borders</th>
+                <th>flag</th>
+            </tr>
+        </thead>
+        <tbody id="country-table">
+            <!-- Country data will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch country data from an API
+        fetch('https://restcountries.com/v2/all')
+            .then(response => response.json())
+            .then(data => {
+                // Get the table body element
+                console.log(data)
+                const tableBody = document.getElementById('country-table');
+
+                // Iterate through the data and create table rows
+                data.forEach(country => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${country["name"]}</td>
+                        <td>${country["capital"]}</td>
+                        <td>${country["population"]}</td>
+                        <td>${country["region"]}</td>
+                        <td>${country["nativeName"]}</td>
+                        <td>${country["callingCodes"]}</td>
+                        <td>${country["timezones"]}</td>
+                        <td>${country["area"]}</td>
+                        <td>${country["borders"]}</td>
+                        <td><img src="${country["flags"]["svg"]}" alt="Flag"></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Data Example</title>
+</head>
+<body>
+    <button onclick="fetchData()">Fetch Data</button>
+    <div id="data"></div>
+
+    <script>
+        function fetchData() {
+            // Replace this URL with the actual API endpoint you want to fetch data from
+            const apiUrl = 'http://localhost:3306/api/customers/';
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Display the data in the console
+                    console.log(data);
+
+                    // Display the data on the webpage
+                    const dataContainer = document.getElementById('data');
+                    dataContainer.innerHTML = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    </script>
+</body>
+</html>
+
